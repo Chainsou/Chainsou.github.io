@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy
+ 
+excelFile = r'corrlist.xlsx'#读入excel数据，这里改成需要的文件名
+df0 = pd.DataFrame(pd.read_excel(excelFile))
+df = df0.drop(df0.columns[0], axis=1)#排除空列
+print(df)#参数输出，务必确认数据是否正确完整！
+
+fig = plt.figure(dpi=128,figsize=(40,32)) #创建绘图对象并定义画布分辨率与大小（英寸）
+ax = fig.add_subplot(111)
+cax = ax.matshow(df, vmin=-1, vmax=1)  #绘制热力图，数据范围从-1到1
+fig.colorbar(cax)  #将matshow生成热力图设置为颜色渐变条
+ticks = numpy.arange(0,58,1) #坐标轴设置（开始，结束，步长）
+ax.set_xticks(ticks)  #生成刻度
+ax.set_yticks(ticks)
+ax.set_xticklabels(df.columns,rotation=90) #生成x轴标签,竖起来
+ax.set_yticklabels(df.columns)
+plt.show()
